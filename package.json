@@ -1,0 +1,19 @@
+{
+  "name": "babel-plugin-involve-export-default",
+  "version": "0.1.0",
+  "description": "该插件可以将默认导出的对象挂载在另一对象上",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "npm run test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/iray100200/babel-plugin-involve-export-default.gits"
+  },
+  "author": "Raymond",
+  "email": "zhenqing.zhang@zatech.com",
+  "license": "ISC",
+  "dependencies": {
+    "lodash": "^4.17.15"
+  }
+}
