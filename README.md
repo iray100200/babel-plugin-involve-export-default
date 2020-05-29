@@ -1,4 +1,4 @@
-# @babel/plugin-plugin-involve-export-default
+# babel-plugin-involve-export-default
 
 Bind others exported objects with its self
 
