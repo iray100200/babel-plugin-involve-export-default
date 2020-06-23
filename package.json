@@ -13,7 +13,7 @@
   "author": "Raymond",
   "email": "zhenqing.zhang@zatech.com",
   "license": "ISC",
-  "dependencies": {
+  "devDependencies": {
     "lodash": "^4.17.15"
   }
 }

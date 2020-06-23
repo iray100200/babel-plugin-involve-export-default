@@ -25,3 +25,22 @@ How to use
   ]
 }
 ```
+
+#### A file is named test.js
+```js
+export default function A() {
+  // do something
+}
+```
+
+#### A file is named test.involve.js
+```js
+export default function B() {
+  // do something
+}
+```
+
+### Output
+```js
+output: A.__involve = B
+```
