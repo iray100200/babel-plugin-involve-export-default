@@ -1,6 +1,6 @@
 {
   "name": "babel-plugin-involve-export-default",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "该插件可以将默认导出的对象挂载在另一对象上",
   "main": "src/index.js",
   "keywords": ["babel", "plugin"],

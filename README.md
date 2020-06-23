@@ -35,12 +35,14 @@ export default function A() {
 
 #### A file is named test.involve.js
 ```js
-export default function B() {
-  // do something
+export default {
+  name: 'B'
 }
 ```
 
 ### Output
 ```js
-output: A.__involve = B
+import A from 'A.js'
+console.log(A.__involve)
+// { name: 'B' }
 ```
