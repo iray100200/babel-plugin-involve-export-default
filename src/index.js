@@ -26,6 +26,7 @@ function hasInvolved(state) {
 }
 
 const cache = new Map()
+const defaultName = '_default'
 
 module.exports = function ({ types: t }) {
   return {
@@ -34,6 +35,8 @@ module.exports = function ({ types: t }) {
         let exportName = get(path, 'node.declaration.name') || get(path, 'node.declaration.id.name')
         if (exportName) {
           cache.set(state.filename, exportName)
+        } else {
+          path.node.declaration.id = t.identifier(defaultName)
         }
       },
       Program: {
@@ -44,8 +47,31 @@ module.exports = function ({ types: t }) {
           state.opts.relative = state.opts.relative || defaultRelative
           const filename = state.filename
           const basename = nodePath.basename(filename, nodePath.extname(filename))
-          const exportName = cache.get(filename) || '_default'
           const program = path.scope.getProgramParent().path
+          const exportName = cache.get(filename) || defaultName
+          if (exportName === defaultName) {
+            const body = program.get('body')
+            /**
+             * get the default export declaration node's index
+             */
+            const defaultExportNodeIndex = body.findIndex(node => {
+              return node.isExportDefaultDeclaration()
+            })
+            const node = program.node.body.splice(defaultExportNodeIndex, 1)[0]
+            /**
+             * append a new variable declaration
+             */
+            program.node.body.push(
+              t.variableDeclaration('var',
+                [
+                  t.variableDeclarator(t.identifier(defaultName), node.declaration)
+                ])
+            )
+            /**
+             * append the default exported declaration
+             */
+            program.node.body.push(t.exportDefaultDeclaration(t.identifier(defaultName)))
+          }
           const id = state.opts.exportName || '__involve'
           const insert = t.importDeclaration([
             t.importDefaultSpecifier(t.identifier(id))
@@ -55,8 +81,8 @@ module.exports = function ({ types: t }) {
               t.memberExpression(t.identifier(exportName), t.identifier(id)),
               t.identifier(id))
           )
-          program.pushContainer('body', insert)
-          program.pushContainer('body', info)
+          program.node.body.push(insert)
+          program.node.body.push(info)
         }
       }
     }

@@ -16,7 +16,7 @@ How to use
 {
   "plugins": [
     [
-      "../babel-plugin-involve-export-default",
+      "babel-plugin-involve-export-default",
       {
         "relative": "./[name].involve",
         "exportName": "__involve"
